@@ -6,6 +6,7 @@ using namespace std;
 
 void inc_friend(map<string, tuple<int, string, string>>&, string);
 void dec_friend(map<string, tuple<int, string, string>>&, string);
+void village_search(map<string, tuple<int, string, string>>&, string);
 
 int main() {
     // declarations
@@ -61,8 +62,21 @@ int main() {
 }
 
 void inc_friend(map<string, tuple<int, string, string>>& m, string n){
-    
+    //using tuple member function, get, and increasing value by one
+    get<0>(m[n])++;
 }
 void dec_friend(map<string, tuple<int, string, string>>& m, string n){
+    //using tuple member function, get, and decreasing value by one
+    get<0>(m[n])--;
+}
+void village_search(map<string, tuple<int, string, string>>& m, string searchKey){
+    auto it = m.find(searchKey);
+    if (it != m.end()) {  // the iterator points to beyond the end of the map if key not found
+        cout << "\nFound " << searchKey;
+        cout << " info:\n";
+        auto[score, race, phrase] = it->second;
+        cout << score << " " << race << " " << phrase << endl;
 
+    } else
+        cout << endl << searchKey << " not found." << endl;
 }
