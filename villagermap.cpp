@@ -16,15 +16,25 @@ int main() {
 
     // access the map using a range-based for loop
     cout << "Villagers and their info (range-based for loop):" << endl;
-    for (auto pair : villagerColors) {
-        cout << pair.first << ": ";
-        //trying to unpack tuple
-        auto id [score, race, phrase] = pair;
-        cout << score << " ";
-        cout << race <<  ' ';
-        cout << phrase << ' ';
-        cout << endl;
+   for (auto pair : villagerColors) {
+    cout << pair.first << ": ";
+    //unpacking tuple like this, because different data types
+    auto [score, race, phrase] = pair.second; 
+    
+    cout << score << " " << race << " " << phrase << endl;
     }
+
+    // access the map using iterators
+    cout << "\nVillagers and their favorite colors (iterators):" << endl;
+    for (map<string, tuple<int, string, string>>::iterator it = villagerColors.begin(); 
+                                               it != villagerColors.end(); ++it) {
+        cout << it->first << ": ";
+        auto[score, race, phrase] = it->second;
+        cout << score << " " << race << " " << phrase << endl;
+    }
+
+    // delete an element
+    villagerColors.erase("Raymond");
 
     // search for an element using .find() to avoid errors
     string searchKey = "Audie";
@@ -32,6 +42,9 @@ int main() {
     if (it != villagerColors.end()) {  // the iterator points to beyond the end of the map
                                        // if searchKey is not found
         cout << "\nFound " << searchKey;
+        cout << " info:\n";
+        auto[score, race, phrase] = it->second;
+        cout << score << " " << race << " " << phrase << endl;
 
     } else
         cout << endl << searchKey << " not found." << endl;
