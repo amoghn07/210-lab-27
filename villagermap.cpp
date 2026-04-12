@@ -4,9 +4,10 @@
 #include <tuple>
 using namespace std;
 
-void inc_friend(map<string, tuple<int, string, string>>&, string);
-void dec_friend(map<string, tuple<int, string, string>>&, string);
-void village_search(map<string, tuple<int, string, string>>&, string);
+void inc_friend(map<string, tuple<int, string, string>>&);
+void dec_friend(map<string, tuple<int, string, string>>&);
+void village_search(map<string, tuple<int, string, string>>, string);
+void output(map<string, tuple<int, string, string>>);
 
 int main() {
     // declarations
@@ -18,58 +19,34 @@ int main() {
     villagerColors["Raymond"] = {9, "human", "dude!"};
     villagerColors.insert({"Marshal", {4, "horse", "neigh!"}});
 
-    // access the map using a range-based for loop
-    cout << "Villagers and their info (range-based for loop):" << endl;
-   for (auto pair : villagerColors) {
-    cout << pair.first << ": ";
-    //unpacking tuple like this, because different data types
-    auto [score, race, phrase] = pair.second; 
-    
-    cout << score << " " << race << " " << phrase << endl;
+    int ans = 0;
+    while (ans != 4){
+        cout << "1. Increase Friendship\n";
+        cout << "2. Decrease Friendship\n";
+        cout << "3. Search for Villager\n";
+        cout << "4. Exit\n";
+        if (ans == 1) inc_frin
     }
 
-    // access the map using iterators
-    cout << "\nVillagers and their favorite colors (iterators):" << endl;
-    for (map<string, tuple<int, string, string>>::iterator it = villagerColors.begin(); 
-                                               it != villagerColors.end(); ++it) {
-        cout << it->first << ": ";
-        auto[score, race, phrase] = it->second;
-        cout << score << " " << race << " " << phrase << endl;
-    }
-
-    // delete an element
-    villagerColors.erase("Raymond");
-
-    // search for an element using .find() to avoid errors
-    string searchKey = "Audie";
-    auto it = villagerColors.find(searchKey);
-    if (it != villagerColors.end()) {  // the iterator points to beyond the end of the map
-                                       // if searchKey is not found
-        cout << "\nFound " << searchKey;
-        cout << " info:\n";
-        auto[score, race, phrase] = it->second;
-        cout << score << " " << race << " " << phrase << endl;
-
-    } else
-        cout << endl << searchKey << " not found." << endl;
-
-    // report size, clear, report size again to confirm map operations
-    cout << "\nSize before clear: " << villagerColors.size() << endl;
-    villagerColors.clear();
-    cout << "Size after clear: " << villagerColors.size() << endl;
 
     return 0;
 }
 
-void inc_friend(map<string, tuple<int, string, string>>& m, string n){
+void inc_friend(map<string, tuple<int, string, string>>& m){
     //using tuple member function, get, and increasing value by one
-    get<0>(m[n])++;
+    for (auto i: m){
+        get<0>(m[i.second])++;
+    }
+    output(m);
 }
-void dec_friend(map<string, tuple<int, string, string>>& m, string n){
+void dec_friend(map<string, tuple<int, string, string>>& m){
     //using tuple member function, get, and decreasing value by one
-    get<0>(m[n])--;
+    for (auto i: m){
+        get<0>(m[i.second])--;
+    }
+    output(m);
 }
-void village_search(map<string, tuple<int, string, string>>& m, string searchKey){
+void village_search(map<string, tuple<int, string, string>> m, string searchKey){
     auto it = m.find(searchKey);
     if (it != m.end()) {  // the iterator points to beyond the end of the map if key not found
         cout << "\nFound " << searchKey;
@@ -79,4 +56,14 @@ void village_search(map<string, tuple<int, string, string>>& m, string searchKey
 
     } else
         cout << endl << searchKey << " not found." << endl;
+    output(m);
+}
+void output(map<string, tuple<int, string, string>> m){
+    cout << "Villager details: \n";
+    for (auto pair : m) {
+    cout << pair.first << " ";
+    auto [score, race, phrase] = pair.second; 
+    
+    cout << '[' << score << " " << race << " " << phrase << ']'<< endl;
+    }
 }
