@@ -4,6 +4,9 @@
 #include <tuple>
 using namespace std;
 
+void inc_friend(map<string, tuple<int, string, string>>&, string);
+void dec_friend(map<string, tuple<int, string, string>>&, string);
+
 int main() {
     // declarations
     map<string, tuple<int, string, string>> villagerColors;
@@ -55,4 +58,11 @@ int main() {
     cout << "Size after clear: " << villagerColors.size() << endl;
 
     return 0;
+}
+
+void inc_friend(map<string, tuple<int, string, string>>& m, string n){
+    
+}
+void dec_friend(map<string, tuple<int, string, string>>& m, string n){
+
 }
