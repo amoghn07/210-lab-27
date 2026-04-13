@@ -8,6 +8,9 @@ void inc_friend(map<string, tuple<int, string, string>>&);
 void dec_friend(map<string, tuple<int, string, string>>&);
 void village_search(map<string, tuple<int, string, string>>);
 void output(map<string, tuple<int, string, string>>);
+void add_vil(map<string, tuple<int, string, string>>&);
+void del_vil(map<string, tuple<int, string, string>>&);
+
 
 int main() {
     // declarations
@@ -20,15 +23,19 @@ int main() {
     villagers.insert({"Marshal", {4, "horse", "neigh!"}});
 
     int ans = 0;
-    while (ans != 4){
-        cout << "1. Increase Friendship\n";
-        cout << "2. Decrease Friendship\n";
-        cout << "3. Search for Villager\n";
-        cout << "4. Exit\n";
+    while (ans != 6){
+        cout << "1. Add Villager\n";
+        cout << "2. Delete Villager\n";
+        cout << "3. Increase Friendship\n";
+        cout << "4. Decrease Friendship\n";
+        cout << "5. Search for Villager\n";
+        cout << "6. Exit\n";
         cin >> ans;
-        if (ans == 1) inc_friend(villagers);
-        else if (ans == 2) dec_friend(villagers);
-        else if (ans == 3) village_search(villagers);
+        if (ans == 1) add_vil(villagers);
+        else if (ans == 2) del_vil(villagers);
+        else if (ans == 3) inc_friend(villagers);
+        else if (ans == 4) dec_friend(villagers);
+        else if (ans == 5) village_search(villagers);
     }
 
 
@@ -72,6 +79,30 @@ void output(map<string, tuple<int, string, string>> m){
     cout << pair.first << " ";
     auto [score, race, phrase] = pair.second; 
     
-    cout << '[' << score << " " << race << " " << phrase << ']'<< endl;
+    cout << '[' << score << ", " << race << ", " << phrase << ']'<< endl;
     }
+}
+void add_vil(map<string, tuple<int, string, string>>& m){
+    string n, s, c;
+    int lvl;
+    cout << "Villager name: ";
+    cin >> n;
+    cout << "Friendship level: ";
+    cin >> lvl;
+    cout << "Species: ";
+    cin >> s;
+    cout << "Catchphrase: ";
+    cin >> c;
+
+    //adding to map
+    m[n] = {lvl, s, c};
+    cout << n << " added.\n";
+    output(m);
+}
+void del_vil(map<string, tuple<int, string, string>>& m){
+    string n;
+    cout << "Enter village name: ";
+    cin >> n;
+    m.erase(n);
+    output(m);
 }
