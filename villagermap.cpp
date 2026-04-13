@@ -31,11 +31,17 @@ int main() {
         cout << "5. Search for Villager\n";
         cout << "6. Exit\n";
         cin >> ans;
-        if (ans == 1) add_vil(villagers);
+        if (cin.fail() || ans > 6 || ans < 1) {
+            cin.clear();
+            cin.ignore();
+            cout << "Please enter a valid selection.\n";
+        }
+        else if (ans == 1) add_vil(villagers);
         else if (ans == 2) del_vil(villagers);
         else if (ans == 3) inc_friend(villagers);
         else if (ans == 4) dec_friend(villagers);
         else if (ans == 5) village_search(villagers);
+        
     }
 
 
@@ -47,7 +53,11 @@ void inc_friend(map<string, tuple<int, string, string>>& m){
     string n;
     cout << "Enter village name: ";
     cin >> n;
-    get<0>(m[n])++;
+    auto it = m.find(n);
+    if (it != m.end()) {  // the iterator points to beyond the end of the map if key not found
+        get<0>(m[n])++;
+    } else
+        cout << endl << n << " not found." << endl;
     output(m);
 }
 void dec_friend(map<string, tuple<int, string, string>>& m){
@@ -55,7 +65,11 @@ void dec_friend(map<string, tuple<int, string, string>>& m){
     string n;
     cout << "Enter village name: ";
     cin >> n;
-    get<0>(m[n])--;
+    auto it = m.find(n);
+    if (it != m.end()) {  // the iterator points to beyond the end of the map if key not found
+        get<0>(m[n])++;
+    } else
+        cout << endl << n << " not found." << endl;
     output(m);
 }
 void village_search(map<string, tuple<int, string, string>> m){
